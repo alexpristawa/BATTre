@@ -1,0 +1,191 @@
+:root {
+    --backgroundColor: rgb(32, 32, 32);  /* 1 */
+    --veryCloseBackgroundColor: rgb(30, 30, 30);  /* 0.95 */
+    --middleBackgroundColor: rgb(27, 27, 27);  /* 0.85 */
+    --darkerBackgroundColor: rgb(22, 22, 22);  /* 0.7 */
+    --darkerBackgroundColorHalf: rgb(22, 22, 22);  /* 0.7 */
+    --borderColor: rgb(46, 46, 46);  /* 1.45 */
+}
+
+* {
+    font-family: Nunito;
+    vertical-align: top;
+}
+
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: var(--backgroundColor);
+    background-size: cover;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body > div:nth-child(1) {
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-family: 'Kalam', cursive;
+    color: rgb(200, 200, 200);
+}
+
+body > div:nth-child(3) {
+    height: 5vh;
+    width: 100vh;
+}
+
+#main {
+    height: 85vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+#main > div:nth-child(1) {
+    width: 10%;
+    height: 100%;
+}
+
+#main > div:nth-child(3) {
+    width: 10%;
+    height: 100%;
+}
+
+#contentDiv {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#moduleHolder {
+    width: 90%;
+    height: 100%;
+    background-color: var(--darkerBackgroundColor);
+    border-radius: 2vh;
+    border: 4px solid var(--borderColor);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    grid-gap: 1.5vh;
+    padding: 1.5vh;
+    box-sizing: border-box;
+} 
+
+.moduleShow {
+    width: 100%;
+    height: 100%;
+    background-color: var(--backgroundColor);
+    border: 2px solid var(--borderColor);
+    border-radius: 1vh;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.moduleShow > .textHolder {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moduleShow > .textHolder > h2, .textHolderText {
+    color: rgb(150, 150, 150);
+    margin: 0px;
+}
+
+.moduleShow > .divHolder {
+    width: 100%;
+    height: 80%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1vh;
+    padding: 1vh;
+    box-sizing: border-box;
+}
+
+.moduleShow > .divHolder > div, .submoduleDisplayInModule {
+    width: 100%;
+    height: 100%;
+    background-color: var(--darkerBackgroundColor);
+    border-radius: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moduleShow > .divHolder > div > h3, .submoduleDisplayTitle {
+    width: 80%;
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+    margin: 0px;
+}
+
+#bigModuleHolder {
+    position: absolute;
+    left: 5%;
+    top: 0px;
+    width: 90%;
+    height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1.5vh;
+    padding: 1.5vh;
+    background-color: var(--darkerBackgroundColor);
+    border-radius: 2vh;
+    border: 4px solid var(--borderColor);
+    box-sizing: border-box;
+    justify-items: center;
+    align-items: center;
+    display: none;
+    visibility: hidden;
+    z-index: 3;
+}
+
+.submodule {
+    width: 100%;
+    height: 100%;
+    background-color: var(--backgroundColor);
+    border: 2px solid var(--borderColor);
+    border-radius: 1vh;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submodule > div:nth-child(1) {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submodule > div:nth-child(1) > h2 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0px;
+}
