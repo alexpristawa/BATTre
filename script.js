@@ -59,6 +59,9 @@ let modulesInfo = [
             },
             {
                 title: 'Goals And Processes'
+            },
+            {
+                title: 'Vision Board'
             }
         ]
     },
@@ -104,7 +107,15 @@ let changeColorScheme = (arr) => {
     });
 }
 
+let createLogo = () => {
+    new Logo(10 * vw, 0, {
+        parent: document.querySelector('#bodyTop'),
+        position: 'relative'
+    });
+}
+
 window.onload = () => {
     changeColorScheme(backgroundColors[0]);
+    createLogo();
     Module.fillModules();
 }

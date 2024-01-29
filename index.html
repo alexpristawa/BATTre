@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="logo.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -12,12 +13,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap'); /*  font-family: 'Noto Serif', serif;  */
         @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap'); /*  font-family: 'Nunito', sans-serif;  */
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap'); /*  font-family: 'Parisienne', cursive;  */
+        @import url('https://fonts.googleapis.com/css2?family=Train+One&display=swap'); /* font-family: 'Train One', system-ui; */
     </style>
     <title>Bed Journal Remake</title>
 </head>
 <body>
 
-    <div>Bed Journal</div>
+    <div id = 'bodyTop'></div>
     <div id = 'main'>
         <div></div>
         <div id = 'contentDiv'>
@@ -61,7 +63,14 @@
         </div>
     </template>
 
-
+    <template id = 'logoTemplate'>
+        <div class = 'mainPart'>
+            <h2>BATT</h2>
+        </div>
+        <div class = 'cap'>
+            <h3>RE</h3>
+        </div>
+    </template>
     
     <script src='script.js'></script>
     <script src="Scripts/animationFunctions.js"></script>
@@ -70,5 +79,6 @@
     <script src="Scripts/functions.js"></script>
     <script src="Classes/Module.js"></script>
     <script src="Classes/Submodule.js"></script>
+    <script src="Classes/Logo.js"></script>
 </body>
 </html>

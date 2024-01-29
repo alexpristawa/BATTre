@@ -1,0 +1,59 @@
+
+
+.logoHolder {
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    width: 40%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 4vh;
+}
+
+.logoHolder > *, .logoHolder {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.logoHolder > .mainPart {
+    height: 100%;
+    width: 78%;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+.logoHolder > .mainPart > h2 {
+    font-size: 510%;
+    color: white;
+    font-family: 'Train One', system-ui;
+    text-shadow: 0 0 0.2em rgba(255, 255, 255, 0.3);
+    margin: 0;
+    line-height: 1;
+    transform: translate(-1.2%, -4%);
+}
+
+.logoHolder > .cap {
+    height: 75%;
+    width: 19.5%;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.logoHolder > .cap > h3 {
+    font-size: 215%;
+    color: white;
+    font-family: 'Train One', system-ui;
+    text-shadow: 0 0 0.2em rgba(255, 255, 255, 0.3);
+    margin: 0;
+    line-height: 1;
+    transform: translate(-1.2%, -4%);
+}
