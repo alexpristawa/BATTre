@@ -1,5 +1,7 @@
 class Logo {
 
+    static topLogo;
+
     constructor(size, percentage = 0, obj) {
         let element = document.createElement('div');
         element.classList.add('logoHolder');
@@ -25,5 +27,32 @@ class Logo {
 
         this.percentage = percentage;
         this.element = element;
+        
+        if(obj.topLogo === true) {
+            Logo.topLogo = this;
+        }
+    }
+
+    incrementPercentage(num) {
+        this.changePercentage(num + this.percentage);
+    }
+
+    changePercentage(num) {
+        this.percentage = num;
+        let div = this.element.querySelector('.batteryPercentage');
+        this.element.querySelector('.cap').style.backgroundColor = 'transparent';
+        if(this.percentage < 0) {
+            this.percentage = 0;
+        } else if(this.percentage > 100) {
+            this.percentage = 100;
+        }
+        if(num == 0) {
+            div.style.right = '110%';
+        } else if(num == 100) {
+            div.style.right = '-10%';
+            this.element.querySelector('.cap').style.backgroundColor = 'green';
+        } else {
+            div.style.right = `${101 - num}%`;
+        }
     }
 }

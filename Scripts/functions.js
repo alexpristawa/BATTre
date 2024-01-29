@@ -5,3 +5,12 @@ Array.prototype.toRGB = function(multiplier = 1) {
         return `rgba(${(this[0] * multiplier).toFixed(0)}, ${(this[1] * multiplier).toFixed(0)}, ${(this[2] * multiplier).toFixed(0)}, ${this[4]})`;
     }
 }
+
+document.addEventListener('keydown', (event) => {
+    if(event.key == 'ArrowLeft') {
+        Logo.topLogo.incrementPercentage(-2);
+    }
+    if(event.key == 'ArrowRight') {
+        Logo.topLogo.incrementPercentage(2);
+    }
+});
