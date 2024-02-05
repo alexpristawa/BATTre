@@ -7,7 +7,7 @@ class Logo {
         element.classList.add('logoHolder');
         element.innerHTML = document.querySelector('#logoTemplate').innerHTML;
         let width = size;
-        let height = (size/vw) / 4 * 3 * vh;
+        let height = size / 8 * 3;
         if(obj.position == 'absolute') {
             element.style.top = `${(100 * vh-height)/2}px`;
             element.style.left = `${(100 * vw-width)/2}px`;
@@ -25,8 +25,8 @@ class Logo {
             obj.parent.appendChild(element);
         }
 
-        this.percentage = percentage;
         this.element = element;
+        this.changePercentage(percentage);
         
         if(obj.topLogo === true) {
             Logo.topLogo = this;
@@ -46,9 +46,9 @@ class Logo {
         } else if(this.percentage > 100) {
             this.percentage = 100;
         }
-        if(num == 0) {
+        if(this.percentage == 0) {
             div.style.right = '110%';
-        } else if(num == 100) {
+        } else if(this.percentage == 100) {
             div.style.right = '-10%';
             this.element.querySelector('.cap').style.backgroundColor = 'green';
         } else {

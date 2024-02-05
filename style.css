@@ -1,4 +1,5 @@
 :root {
+    --lighterBackgroundColor: rgb(42, 42, 42); /* 1.3 */
     --backgroundColor: rgb(32, 32, 32);  /* 1 */
     --veryCloseBackgroundColor: rgb(30, 30, 30);  /* 0.95 */
     --middleBackgroundColor: rgb(27, 27, 27);  /* 0.85 */
@@ -15,6 +16,10 @@
 html,body {
     height: 100%;
     width: 100%;
+}
+
+textarea {
+    resize: none;
 }
 
 body {
@@ -174,9 +179,10 @@ body > div:nth-child(3) {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
-.submodule > div:nth-child(1) {
+.submodule > .textHolder {
     height: 20%;
     width: 100%;
     display: flex;
@@ -184,8 +190,53 @@ body > div:nth-child(3) {
     align-items: center;
 }
 
-.submodule > div:nth-child(1) > h2 {
+.submodule > .textHolder > h2 {
     color: white;
     font-size: 1.5rem;
     margin: 0px;
+}
+
+.submodule > .contentHolder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75%;
+    width: 90%;
+    overflow-y: scroll;
+}
+
+.bullet {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 4%;
+}
+
+.bullet > .bulletPart {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.7rem;
+}
+
+.bullet > .textPart {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bullet > .textPart > textarea {
+    width: 100%;
+    font-size: 1rem;
+    background-color: var(--lighterBackgroundColor);
+    border-radius: 0.3rem;
+    border: 2px solid var(--borderColor);
+    color: white;
+    padding: 1%;
+    padding-left: 2%;
 }

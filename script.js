@@ -35,16 +35,19 @@ let modulesInfo = [
         title: 'Looking Back',
         submodules: [
             {
-                title: 'What To Improve On'
+                title: 'What To Improve On',
+                textType: 'bullet'
             },
             {
-                title: 'What I Am Proud Of'
+                title: 'What I Am Proud Of',
+                textType: 'bullet'
             },
             {
                 title: "How Far I've Come"
             },
             {
-                title: 'Discoveries'
+                title: 'Discoveries',
+                textType: 'bullet'
             }
         ]
     },
@@ -52,7 +55,8 @@ let modulesInfo = [
         title: 'Looking Ahead',
         submodules: [
             {
-                title: 'Intentions'
+                title: 'Intentions',
+                textType: 'bullet'
             },
             {
                 title: "What I'm Looking Forward To"
