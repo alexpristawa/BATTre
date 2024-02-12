@@ -31,9 +31,6 @@
                 <div class = 'moduleShow'></div>
                 <div class = 'moduleShow'></div>
             </div>
-
-
-            <div id = 'bigModuleHolder'></div>
         </div>
         <div></div>
     </div>
@@ -43,7 +40,7 @@
         <div class = "textHolder">
             <h2 class="textHolderText"></h2>
         </div>
-        <div class = "divHolder">
+        <div class = "contentHolder">
             <div class="submoduleDisplayInModule">
                 <h3 class="submoduleDisplayTitle"></h3>
             </div>
@@ -63,7 +60,7 @@
         <div class = "textHolder">
             <h2></h2>
         </div>
-        <div class = 'contentHolder'>
+        <div class = 'contentHolder listHolder'>
 
         </div>
     </template>
@@ -78,10 +75,52 @@
         </div>
     </template>
 
-    <template id = 'bulletPointTemplate'>
+    <template id = 'bulletTemplate'>
         <div class = 'bulletPart'>&bull;</div>
         <div class = 'textPart'>
             <textarea rows='1'></textarea>
+        </div>
+    </template>
+
+    <template id = 'bulletDateTemplate'>
+        <div class = 'bulletPart'>
+            <div class = 'bulletHolder'>
+                <input type="text" class = 'month'>/<input type="text" class = 'day'>
+            </div>
+        </div>
+        <div class = 'textPart'>
+            <textarea rows="1"></textarea>
+        </div>
+    </template>
+
+    <template id = 'bulletTimeTemplate'>
+        <div class = 'bulletPart'>
+            <div class = 'bulletHolder'>
+                <input type="text" class = 'hour'>:<input type="text" class = 'minute'>
+            </div>
+        </div>
+        <div class = 'textPart'>
+            <textarea rows="1"></textarea>
+        </div>
+    </template>
+
+    <template id = 'bulletCheckboxTemplate'>
+        <div class = 'bulletPart'>
+            <div class = 'checkbox'>
+                <input type="checkbox">
+                <div class = 'check'></div>
+            </div>
+        </div>
+        <div class = 'textPart'>
+            <textarea rows="1"></textarea>
+        </div>
+    </template>
+    
+    <template id = 'textareaTemplate'>
+        <div class = 'titleHolder'>
+        </div>
+        <div class = 'textareaHolder'>
+            <textarea></textarea>
         </div>
     </template>
     

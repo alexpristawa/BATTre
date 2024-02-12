@@ -1,3 +1,6 @@
+/*
+    Array Prototype method with the multiplier for each value as parameter
+*/
 Array.prototype.toRGB = function(multiplier = 1) {
     if(this.length == 3) {
         return `rgb(${(this[0] * multiplier).toFixed(0)}, ${(this[1] * multiplier).toFixed(0)}, ${(this[2] * multiplier).toFixed(0)})`;
@@ -6,6 +9,7 @@ Array.prototype.toRGB = function(multiplier = 1) {
     }
 }
 
+//Keydown functions
 document.addEventListener('keydown', (event) => {
     if(event.key == 'ArrowLeft') {
         Logo.topLogo.incrementPercentage(-2);

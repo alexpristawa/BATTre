@@ -107,7 +107,7 @@ body > div:nth-child(3) {
 
 .moduleShow > .textHolder {
     width: 100%;
-    height: 20%;
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,9 +118,9 @@ body > div:nth-child(3) {
     margin: 0px;
 }
 
-.moduleShow > .divHolder {
+.moduleShow > .contentHolder {
     width: 100%;
-    height: 80%;
+    height: 85%;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
@@ -129,7 +129,7 @@ body > div:nth-child(3) {
     box-sizing: border-box;
 }
 
-.moduleShow > .divHolder > div, .submoduleDisplayInModule {
+.moduleShow > .contentHolder > div, .submoduleDisplayInModule, .divToMove {
     width: 100%;
     height: 100%;
     background-color: var(--darkerBackgroundColor);
@@ -139,7 +139,7 @@ body > div:nth-child(3) {
     align-items: center;
 }
 
-.moduleShow > .divHolder > div > h3, .submoduleDisplayTitle {
+.moduleShow > .contentHolder > div > h3, .submoduleDisplayTitle, .submodule > .contentHolder > div > h3, .h3ToMove {
     width: 80%;
     text-align: center;
     color: white;
@@ -183,7 +183,7 @@ body > div:nth-child(3) {
 }
 
 .submodule > .textHolder {
-    height: 20%;
+    height: 15%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -197,17 +197,82 @@ body > div:nth-child(3) {
 }
 
 .submodule > .contentHolder {
+    height: 83%;
+    width: 100%;
+    padding: 1vh;
+    box-sizing: border-box;
+    padding-top: 0;
+}
+
+.submodule > .listHolder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 75%;
-    width: 90%;
     overflow-y: scroll;
-    padding-top: 1px;
-    padding-right: 1px;
 }
 
-.bullet {
+.submodule > .divHolder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1vh;
+}
+
+.submodule > .divHolder > .submoduleDisplayInModule {
+    width: 100%;
+    height: 100%;
+    background-color: var(--darkerBackgroundColor);
+}
+
+.submodule > .textareaHolder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: space-evenly;
+    justify-content: space-evenly;
+}
+
+.submodule > .textareaHolder > .textarea {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submodule > .textareaHolder > .textarea > .titleHolder {
+    height: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.submodule > .textareaHolder > .textarea > .textareaHolder {
+    height: calc(100% - 2rem);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submodule > .textareaHolder > .textarea > .textareaHolder > textarea {
+    height: 100%;
+    width: 100%;
+    background-color: var(--darkerBackgroundColor);
+    border-radius: 1.5vh;
+    border: 2px solid var(--borderColor);
+    color: white;
+    font-size: 1rem;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+
+.bullet, .bulletDate, .bulletTime, .bulletCheckbox {
     width: 100%;
     height: 15%;
     display: flex;
@@ -215,7 +280,7 @@ body > div:nth-child(3) {
     margin-bottom: 4%;
 }
 
-.bullet > .bulletPart {
+.bullet > .bulletPart, .bulletCheckbox > .bulletPart {
     height: 100%;
     width: 10%;
     display: flex;
@@ -224,7 +289,7 @@ body > div:nth-child(3) {
     font-size: 1.7rem;
 }
 
-.bullet > .textPart {
+.bullet > .textPart, .bulletCheckbox > .textPart {
     width: 90%;
     height: 100%;
     display: flex;
@@ -232,7 +297,15 @@ body > div:nth-child(3) {
     align-items: center;
 }
 
-.bullet > .textPart > textarea {
+.bulletDate > .textPart, .bulletTime > .textPart {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bullet > .textPart > textarea, .bulletDate > .textPart > textarea, .bulletCheckbox > .textPart > textarea, .bulletTime > .textPart > textarea {
     width: 100%;
     font-size: 1rem;
     background-color: var(--lighterBackgroundColor);
@@ -241,4 +314,73 @@ body > div:nth-child(3) {
     color: white;
     padding: 1%;
     padding-left: 2%;
+}
+
+.bulletDate > .bulletPart, .bulletTime > .bulletPart {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bulletDate > .bulletPart > .bulletHolder, .bulletTime > .bulletPart > .bulletHolder{
+    width: 90%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+    font-size: 1rem;
+}
+
+.bulletDate > .bulletPart > .bulletHolder > input, .bulletTime > .bulletPart > .bulletHolder > input {
+    width: 40%;
+    height: 90%;
+    font-size: 1rem;
+    color: rgb(230, 230, 230);
+    background-color: var(--middleBackgroundColor);
+    border: 0;
+    border-radius: 0.5vh;
+    text-align: center;
+}
+
+.checkbox {
+    position: relative;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5vh solid var(--borderColor);
+}
+
+.checkbox > input {
+    position: absolute;
+    width: 105%;
+    height: 105%;
+    left: -10%;
+    top: -10%;
+    border-radius: 100%;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+}
+
+.checkbox > .check {
+    opacity: 0;
+    transition: opacity 200ms;
+    width: 70%;
+    height: 70%;
+    background-color: var(--borderColor);
+    border-radius: 100%;
+    border: 0;
+}
+
+.checkbox > input:checked ~ div {
+    opacity: 1;
+}
+
+.bulletCheckbox > .bulletPart > .checkbox {
+    height: 50%;
 }
