@@ -18,3 +18,12 @@ document.addEventListener('keydown', (event) => {
         Logo.topLogo.incrementPercentage(2);
     }
 });
+
+HTMLElement.prototype.getElementByDataset = function(query, parentNum) {
+    let element = this;
+    for(let i = 0; i < parentNum; i++) {
+        element = element.parentElement;
+    }
+    console.log(element);
+    return element.querySelector(query);
+}

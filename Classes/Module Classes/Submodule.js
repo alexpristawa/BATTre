@@ -63,35 +63,10 @@ class Submodule extends Module  {
             return;
         }
 
-        //Hitting tab or shift based on bullet points
-        if(this.module.textType == 'checkbox') {
-
-            //If they want an indent
-            if(event.key == 'Tab') {
-
-                event.preventDefault();
-                let element = event.target.closest('.bulletCheckbox');
-                let width = this.contentHolder.offsetWidth;
-
-                //If it is a forward indent
-                if(!event.shiftKey) {
-                    let newValue = parseFloat(window.getComputedStyle(element).marginLeft) + width * 0.1;
-
-                    //If you have already indented 5 times
-                    if(newValue > 5 * width * 0.1) {
-                        return;
-                    }
-                    element.style.marginLeft = `${newValue}px`;
-                    element.style.width = `${element.offsetWidth - width * 0.1}px`;
-                } else {
-                    let newValue = parseFloat(window.getComputedStyle(element).marginLeft) - width * 0.1;
-                    //No negative margin
-                    if(newValue < 0) {
-                        newValue = 0;
-                    }
-                    element.style.marginLeft = `${newValue}px`;
-                    element.style.width = `${element.offsetWidth + width * 0.1}px`;
-                }
+        //If the enter had a target, no additional content is added
+        if(event.target.dataset.enter_target != undefined) {
+            if(event.key == 'Enter') {
+                return;
             }
         }
 
@@ -151,8 +126,8 @@ class Submodule extends Module  {
         setTimeout(() => {
             divToMove.remove();
             textToMove.remove();
-            this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1})`).dataset.target = undefined;
-            this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1}) > h3`).dataset.target = undefined;
+            delete this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1})`).dataset.target;
+            delete this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1}) > h3`).dataset.target;
         }, 1000)
     }
 
@@ -162,6 +137,7 @@ class Submodule extends Module  {
     fillContent() {
         //Meaning the div has submodules
         if(this.module.submodules != undefined) {
+
             //Makes the submodules in the submodule
             for(let i = 0; i < this.module.submodules.length; i++) {
                 let subDiv = document.createElement('div');
@@ -172,73 +148,22 @@ class Submodule extends Module  {
                 h3.innerHTML = this.module.submodules[i].title;
                 subDiv.appendChild(h3);
             }
-        } else if(this.module.textType == 'bullet') {
-            this.makeBullet();
+
+        //Based on the type of bullet, it creates a new Bullet object
+        } else if(this.module.textType == 'bullet-regular') {
+            new Bullet('regular', this);
         } else if(this.module.textType == 'bullet-date') {
-            this.makeBullet('date');
+            new Bullet('date', this);
         } else if(this.module.textType == 'bullet-time') {
-            this.makeBullet('time');
-        } else if(this.module.textType == 'checkbox') {
-            this.makeBullet('checkbox');
+            new Bullet('time', this);
+        } else if(this.module.textType == 'bullet-checkbox') {
+            new Bullet('checkbox', this);
+
+        //Creates a new Textarea object
         } else if(this.module.textType == 'textarea') {
-            this.makeTextarea();
-        }
-    }
-
-    /*
-        Adds a bullet to contentHolder
-        @param type {String} - Type of bullet (regular, date, etc.)
-    */
-    makeBullet(type = 'regular') {
-        let bullet = document.createElement('div');
-        if(type == 'regular') {
-            bullet.classList.add('bullet');
-            bullet.innerHTML = document.getElementById('bulletTemplate').innerHTML;
-        } else if(type == 'date') {
-            bullet.classList.add('bulletDate');
-            bullet.innerHTML = document.getElementById('bulletDateTemplate').innerHTML;
-            bullet.querySelector('.bulletHolder').addEventListener('click', (event) => {
-                this.shiftBullet(event, bullet);
-            });
-        } else if(type == 'time') {
-            bullet.classList.add('bulletTime');
-            bullet.innerHTML = document.getElementById('bulletTimeTemplate').innerHTML;
-            bullet.querySelector('.bulletHolder').addEventListener('click', (event) => {
-                this.shiftBullet(event, bullet);
-            });
-        } else if(type == 'checkbox') {
-            bullet.classList.add('bulletCheckbox');
-            bullet.innerHTML = document.getElementById('bulletCheckboxTemplate').innerHTML;
-        }
-        this.contentHolder.appendChild(bullet);
-        bullet.querySelector('textarea').focus();
-    }
-
-    /*
-        Listener function for when a date or time is entered into a bullet
-    */
-    shiftBullet(event) {
-
-    }
-
-    /*
-        Adds a textarea to contentHolder
-    */
-    makeTextarea() {
-        let length = this.module.textInfo.names.length
-        for(let i = 0; i < length; i++) {
-            let factor = Math.ceil(length**0.5);
-            let div = document.createElement('div');
-            div.classList.add('textarea');
-            div.innerHTML = document.getElementById('textareaTemplate').innerHTML;
-            this.contentHolder.appendChild(div);
-            div.style.width = `${100/factor - 1.5}%`;
-            div.style.height = `${100/factor - 1.5}%`;
-            div.querySelector('.titleHolder').innerHTML = this.module.textInfo.names[i];
-            div.focus();
-            if(this.module.textInfo.names[i] == '/noName') {
-                div.querySelector('.titleHolder').style.display = 'none';
-                div.querySelector('.textareaHolder').style.height = '100%';
+            let length = this.module.textInfo.names.length;
+            for(let i = 0; i < length; i++) {
+                new Textarea(length, this.module.textInfo.names[i], this);
             }
         }
     }

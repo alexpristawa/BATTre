@@ -1,0 +1,46 @@
+.submodule > .textareaHolder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: space-evenly;
+    justify-content: space-evenly;
+}
+
+.submodule > .textareaHolder > .textarea {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submodule > .textareaHolder > .textarea > .titleHolder {
+    height: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.submodule > .textareaHolder > .textarea > .textareaHolder {
+    height: calc(100% - 2rem);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submodule > .textareaHolder > .textarea > .textareaHolder > textarea {
+    height: 100%;
+    width: 100%;
+    background-color: var(--darkerBackgroundColor);
+    border-radius: 1.5vh;
+    border: 2px solid var(--borderColor);
+    color: white;
+    font-size: 1rem;
+    padding: 2%;
+    box-sizing: border-box;
+}

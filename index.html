@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="logo.css" rel="stylesheet" type="text/css" />
+    <link href="Classes/Logo/logo.css" rel="stylesheet" type="text/css" />
+    <link href="Classes/Text Classes/Bullet/bullet.css" rel="stylesheet" type="text/css" />
+    <link href="Classes/Text Classes/Textarea/textarea.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -85,7 +87,7 @@
     <template id = 'bulletDateTemplate'>
         <div class = 'bulletPart'>
             <div class = 'bulletHolder'>
-                <input type="text" class = 'month'>/<input type="text" class = 'day'>
+                <input type="text" class = 'month' placeholder="mm" data-parent_num = '1' data-enter_target = 'input:nth-child(2)'>/<input type="text" class = 'day' placeholder="dd" data-parent_num = '3' data-enter_target = 'textarea'>
             </div>
         </div>
         <div class = 'textPart'>
@@ -96,7 +98,7 @@
     <template id = 'bulletTimeTemplate'>
         <div class = 'bulletPart'>
             <div class = 'bulletHolder'>
-                <input type="text" class = 'hour'>:<input type="text" class = 'minute'>
+                <input type="text" class = 'hour' placeholder="hh" data-parent_num = '1' data-enter_target = 'input:nth-child(2)'>:<input type="text" class = 'minute' placeholder='mm' data-parent_num = '3' data-enter_target = 'textarea'>
             </div>
         </div>
         <div class = 'textPart'>
@@ -129,8 +131,10 @@
     <script src="Scripts/positionFunctions.js"></script>
     <script src="Scripts/myLibrary.js"></script>
     <script src="Scripts/functions.js"></script>
-    <script src="Classes/Module.js"></script>
-    <script src="Classes/Submodule.js"></script>
-    <script src="Classes/Logo.js"></script>
+    <script src="Classes/Module Classes/Module.js"></script>
+    <script src="Classes/Module Classes/Submodule.js"></script>
+    <script src="Classes/Logo/Logo.js"></script>
+    <script src="Classes/Text Classes/Bullet/Bullet.js"></script>
+    <script src="Classes/Text Classes/Textarea/Textarea.js"></script>
 </body>
 </html>

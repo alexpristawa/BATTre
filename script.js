@@ -40,11 +40,11 @@ let modulesInfo = [
         submodules: [
             {
                 title: 'What To Improve On',
-                textType: 'bullet'
+                textType: 'bullet-regular'
             },
             {
                 title: 'What I Am Proud Of',
-                textType: 'bullet'
+                textType: 'bullet-regular'
             },
             {
                 title: "How Far I've Come",
@@ -55,7 +55,7 @@ let modulesInfo = [
             },
             {
                 title: 'Discoveries',
-                textType: 'bullet'
+                textType: 'bullet-regular'
             }
         ]
     },
@@ -64,7 +64,7 @@ let modulesInfo = [
         submodules: [
             {
                 title: 'Intentions',
-                textType: 'bullet'
+                textType: 'bullet-regular'
             },
             {
                 title: "What I'm Looking Forward To",
@@ -75,7 +75,7 @@ let modulesInfo = [
             },
             {
                 title: 'Goals And Processes',
-                textType: 'checkbox'
+                textType: 'bullet-checkbox'
             },
             {
                 title: 'Vision Board'
@@ -106,7 +106,7 @@ let modulesInfo = [
             },
             {
                 title: "Habit Builder",
-                textType: 'checkbox'
+                textType: 'bullet-checkbox'
             },
             {
                 title: 'To-Do'
