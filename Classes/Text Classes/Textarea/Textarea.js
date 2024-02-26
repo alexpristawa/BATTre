@@ -1,4 +1,4 @@
-class Textarea {
+class Textarea extends Info {
 
     /*
         Makes a textarea and adds it to object.contentHolder
@@ -6,20 +6,46 @@ class Textarea {
         @param name {String} - Name of the textarea (if name = '/noName', the name div is set to display: none);
         @param object {Submodule} - Submodule where the thing is added to
     */
-    constructor(length, name, object) {
+    constructor(length, i, parentModule, defaultValue = '') {
+        super(i, parentModule);
+        let name = parentModule.module.textInfo.names[i];
+
+        //Sizing and styling for the div and textarea
         let factor = Math.ceil(length**0.5);
-        let div = document.createElement('div');
-        div.classList.add('textarea');
-        div.innerHTML = document.getElementById('textareaTemplate').innerHTML;
-        object.contentHolder.appendChild(div);
-        div.style.width = `${100/factor - 1.5}%`;
-        div.style.height = `${100/factor - 1.5}%`;
-        div.querySelector('.titleHolder').innerHTML = name;
-        div.focus();
+        this.div.classList.add('textarea');
+        this.div.innerHTML = document.getElementById('textareaTemplate').innerHTML;
+        parentModule.contentHolder.appendChild(this.div);
+        this.div.style.width = `${100/factor - 1.5}%`;
+        this.div.style.height = `${100/factor - 1.5}%`;
+        this.div.querySelector('.titleHolder').innerHTML = name;
+        this.textarea = this.div.querySelector('textarea');
+
+        //Sets the default value of the textarea
+        this.textarea.value = defaultValue;
+
+        //Focuses the textarea
+        this.div.focus();
+
+        //Makes it so the textarea has no name section to enlarge space
         if(name == '/noName') {
-            div.querySelector('.titleHolder').style.display = 'none';
-            div.querySelector('.textareaHolder').style.height = '100%';
+            this.div.querySelector('.titleHolder').style.display = 'none';
+            this.div.querySelector('.textareaHolder').style.height = '100%';
         }
+    }
+
+    isEmpty() {
+        if(this.textarea.value.replace(' ', '') == '') {
+            return true;
+        }
+        return false;
+    }
+
+    /*
+        Keydown event handler for the div
+    */
+    keydownHandler(event) {
+        
+
     }
 
 }

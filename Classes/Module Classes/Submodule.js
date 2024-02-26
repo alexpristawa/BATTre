@@ -36,6 +36,9 @@ class Submodule extends Module  {
             //Gives a padding-like effect on the sides if text is being stored
             this.contentHolder.style.width = '95%';
 
+            //Stores inner-information holders like bullets
+            this.children = [];
+
             if(this.module.textType == 'textarea') {
                 this.contentHolder.classList.remove('listHolder');
                 this.contentHolder.classList.add('textareaHolder');
@@ -150,20 +153,26 @@ class Submodule extends Module  {
             }
 
         //Based on the type of bullet, it creates a new Bullet object
-        } else if(this.module.textType == 'bullet-regular') {
-            new Bullet('regular', this);
-        } else if(this.module.textType == 'bullet-date') {
-            new Bullet('date', this);
-        } else if(this.module.textType == 'bullet-time') {
-            new Bullet('time', this);
-        } else if(this.module.textType == 'bullet-checkbox') {
-            new Bullet('checkbox', this);
-
+        } else if(['bullet-regular', 'bullet-date', 'bullet-time', 'bullet-checkbox'].includes(this.module.textType)) {
+            if(this.children.length == 0) {
+                if(this.module.info.length > 0) {
+                    const info = [...this.module.info];
+                    this.module.info = [];
+                    for(let i = 0; i < info.length; i++) {
+                        this.children.push(new Bullet(this.module.textType.substring(this.module.textType.indexOf('-')+1), this, info[i]));
+                    }
+                } else {
+                    this.children.push(new Bullet(this.module.textType.substring(this.module.textType.indexOf('-')+1), this));
+                }
+            }  else {
+                this.children.push(new Bullet(this.module.textType.substring(this.module.textType.indexOf('-')+1), this));
+            }
         //Creates a new Textarea object
         } else if(this.module.textType == 'textarea') {
+
             let length = this.module.textInfo.names.length;
             for(let i = 0; i < length; i++) {
-                new Textarea(length, this.module.textInfo.names[i], this);
+                new Textarea(length, i, this, this.module.info[i]);
             }
         }
     }

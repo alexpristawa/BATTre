@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Starting favicon -->
+    <link rel="icon" type="image/png" sizes="64x64" href="Images/Favicons/favicon0.png">
+
+    <!-- Links to all CSS -->
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="Classes/Logo/logo.css" rel="stylesheet" type="text/css" />
+    <link href="Classes/Misc/Logo/logo.css" rel="stylesheet" type="text/css" />
+    <link href="Classes/Misc/Settings/settings.css" rel="stylesheet" type="text/css" />
     <link href="Classes/Text Classes/Bullet/bullet.css" rel="stylesheet" type="text/css" />
     <link href="Classes/Text Classes/Textarea/textarea.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');  /*  font-family: 'Kalam', cursive;  */
@@ -17,12 +26,27 @@
         @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap'); /*  font-family: 'Parisienne', cursive;  */
         @import url('https://fonts.googleapis.com/css2?family=Train+One&display=swap'); /* font-family: 'Train One', system-ui; */
     </style>
-    <title>Bed Journal Remake</title>
+    <title>BATTre</title>
 </head>
 <body>
 
     <div id = 'bodyTop'>
-        
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <div class = 'settingsHolder' onclick = 'Settings.click()'>
+                <i class = 'fas fa-gear settingsUnrotate'></i>
+            </div>
+            <div class = 'settingsDiv'>
+                <button id = 'archiveButton'>Archive</button>
+                <hr>
+                <button id = 'customizationsButton'>Customizations</button>
+            </div>
+        </div>
     </div>
     <div id = 'main'>
         <div></div>
@@ -38,6 +62,7 @@
     </div>
     <div></div>
 
+    <!-- Templates -->
     <template id = 'moduleShowTemplate'>
         <div class = "textHolder">
             <h2 class="textHolderText"></h2>
@@ -98,7 +123,7 @@
     <template id = 'bulletTimeTemplate'>
         <div class = 'bulletPart'>
             <div class = 'bulletHolder'>
-                <input type="text" class = 'hour' placeholder="hh" data-parent_num = '1' data-enter_target = 'input:nth-child(2)'>:<input type="text" class = 'minute' placeholder='mm' data-parent_num = '3' data-enter_target = 'textarea'>
+                <input type="text" class = 'hour' placeholder="hh" data-parent_num = '1' data-enter_target = 'input:nth-child(2)'>:<input type="text" class = 'minute' placeholder='mm' data-parent_num = '3' data-enter_target = 'textarea'><div class = 'AMPM'>AM</div>
             </div>
         </div>
         <div class = 'textPart'>
@@ -133,8 +158,12 @@
     <script src="Scripts/functions.js"></script>
     <script src="Classes/Module Classes/Module.js"></script>
     <script src="Classes/Module Classes/Submodule.js"></script>
-    <script src="Classes/Logo/Logo.js"></script>
+    <script src="Classes/Misc/Favicon/Favicon.js"></script>
+    <script src="Classes/Misc/Logo/Logo.js"></script>
+    <script src="Classes/Misc/Settings/settings.js"></script>
+    <script src="Classes/Text Classes/All/Info.js"></script>
     <script src="Classes/Text Classes/Bullet/Bullet.js"></script>
     <script src="Classes/Text Classes/Textarea/Textarea.js"></script>
+    <script src="Classes/StorageManager/StorageManager.js"></script>
 </body>
 </html>

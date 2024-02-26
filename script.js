@@ -40,22 +40,26 @@ let modulesInfo = [
         submodules: [
             {
                 title: 'What To Improve On',
-                textType: 'bullet-regular'
+                textType: 'bullet-regular',
+                info: []
             },
             {
                 title: 'What I Am Proud Of',
-                textType: 'bullet-regular'
+                textType: 'bullet-regular',
+                info: []
             },
             {
                 title: "How Far I've Come",
                 textType: 'textarea',
                 textInfo: {
                     names: ['Day', 'Week', 'Month', 'Year']
-                }
+                },
+                info: []
             },
             {
                 title: 'Discoveries',
-                textType: 'bullet-regular'
+                textType: 'bullet-regular',
+                info: []
             }
         ]
     },
@@ -64,18 +68,21 @@ let modulesInfo = [
         submodules: [
             {
                 title: 'Intentions',
-                textType: 'bullet-regular'
+                textType: 'bullet-regular',
+                info: []
             },
             {
                 title: "What I'm Looking Forward To",
                 textType: 'textarea',
                 textInfo: {
                     names: ['Day', 'Week', 'Month', 'Year']
-                }
+                },
+                info: []
             },
             {
                 title: 'Goals And Processes',
-                textType: 'bullet-checkbox'
+                textType: 'bullet-checkbox',
+                info: []
             },
             {
                 title: 'Vision Board'
@@ -90,11 +97,13 @@ let modulesInfo = [
                 submodules: [
                     {
                         title: "Today's Schedule",
-                        textType: 'bullet-time'
+                        textType: 'bullet-time',
+                        info: []
                     },
                     {
                         title: "Tomorrow's Schedule",
-                        textType: 'bullet-time'
+                        textType: 'bullet-time',
+                        info: []
                     },
                     {
                         title: "Routine"
@@ -106,7 +115,8 @@ let modulesInfo = [
             },
             {
                 title: "Habit Builder",
-                textType: 'bullet-checkbox'
+                textType: 'bullet-checkbox',
+                info: []
             },
             {
                 title: 'To-Do'
@@ -116,7 +126,8 @@ let modulesInfo = [
                 textType: 'textarea',
                 textInfo: {
                     names: ['/noName']
-                }
+                },
+                info: []
             }
         ]
     },
@@ -125,19 +136,23 @@ let modulesInfo = [
         submodules: [
             {
                 title: 'Positive Failures',
-                textType: 'bullet-date'
+                textType: 'bullet-date',
+                info: []
             },
             {
                 title: 'Compliments',
-                textType: 'bullet-date'
+                textType: 'bullet-date',
+                info: []
             },
             {
                 title: 'Key Takeaways',
-                textType: 'bullet-date'
+                textType: 'bullet-date',
+                info: []
             },
             {
                 title: 'Thought Dumps',
-                textType: 'bullet-date'
+                textType: 'bullet-date',
+                info: []
             }
         ]
     }
@@ -153,15 +168,32 @@ let changeColorScheme = (arr) => {
 //Function used to make the logo at the top
 let createLogo = () => {
     new Logo(10 * vw, 0, {
-        parent: document.querySelector('#bodyTop'),
+        parent: document.querySelector('#bodyTop > div:nth-child(2)'),
         position: 'relative',
         topLogo: true
     });
 }
 
+let initializeModulesInfo = () => {
+    if(localStorage.BATTre != undefined) {
+        let obj = JSON.parse(localStorage.BATTre);
+        modulesInfo = obj.modulesInfo;
+    }
+    StorageManager.updateStorage();
+}
+
 //onload function to fill modules and stuff
 window.onload = () => {
+    Settings.initializeDimensions();
+    Favicon.loadupFunction();
+    initializeModulesInfo();
     changeColorScheme(backgroundColors[0]);
     createLogo();
     Module.fillModules();
 }
+
+window.addEventListener('beforeunload', (event) => {
+    if(modulesInfo != undefined) {
+        StorageManager.updateStorage();
+    }
+});

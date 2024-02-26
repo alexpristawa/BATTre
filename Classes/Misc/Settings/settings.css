@@ -1,0 +1,89 @@
+.settingsHolder {
+    height: 90%;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100vw;
+    background-color: var(--darkerBackgroundColor);
+    margin-right: 1vh;
+    transition: transform 1000ms cubic-bezier(.41,.07,.46,1.36);
+    cursor: pointer;
+}
+
+.settingsHolder > i {
+    font-size: 6vh;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.settingsHolder > i.settingsRotate {
+    animation: settingsRotate 1000ms cubic-bezier(.41,.07,.46,1.36);
+}
+
+.settingsHolder > i.settingsUnrotate {
+    animation: settingsUnrotate 1000ms cubic-bezier(.41,.07,.46,1.36);
+}
+
+@keyframes settingsRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-240deg);
+    }
+}
+
+@keyframes settingsUnrotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(240deg);
+    }
+}
+
+.settingsDiv {
+    position: absolute;
+    top: 10vh;
+    right: 1vh;
+    height: 40vh;
+    width: 10vw;
+    background-color: var(--darkerBackgroundColor);
+    z-index: 1;
+    border-radius: 2vh;
+    transition: transform 1000ms cubic-bezier(.41,.07,.46,1.36);
+    border: 5px solid var(--borderColor);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.settingsDiv > button {
+    height: 20%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    background-color: var(--backgroundColor);
+    font-size: 1.2rem;
+    color: white;
+    transition: background 100ms ease;
+    cursor: pointer;
+}
+
+.settingsDiv > hr {
+    width: 80%;
+    height: 1px;
+    border-radius: 100vw;
+    border: 0;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.settingsDiv > button:hover {
+    background-color: var(--lighterBackgroundColor);
+}

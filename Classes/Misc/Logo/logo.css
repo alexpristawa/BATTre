@@ -15,7 +15,7 @@
 .logoHolder > *, .logoHolder {
     user-select: none;
     -webkit-user-select: none;
-    cursor: default;
+    cursor: pointer;
 }
 
 .logoHolder > .mainPart {

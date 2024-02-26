@@ -12,10 +12,10 @@ Array.prototype.toRGB = function(multiplier = 1) {
 //Keydown functions
 document.addEventListener('keydown', (event) => {
     if(event.key == 'ArrowLeft') {
-        Logo.topLogo.incrementPercentage(-2);
+        Logo.topLogo.incrementPercentage(-10);
     }
     if(event.key == 'ArrowRight') {
-        Logo.topLogo.incrementPercentage(2);
+        Logo.topLogo.incrementPercentage(10);
     }
 });
 
@@ -24,6 +24,5 @@ HTMLElement.prototype.getElementByDataset = function(query, parentNum) {
     for(let i = 0; i < parentNum; i++) {
         element = element.parentElement;
     }
-    console.log(element);
     return element.querySelector(query);
 }

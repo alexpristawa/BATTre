@@ -1,13 +1,45 @@
 /* Styles for each bullet div*/
-.bullet, .bulletDate, .bulletTime, .bulletCheckbox {
+.bullet {
     width: 100%;
     height: 15%;
     display: flex;
     align-items: center;
     margin-bottom: 4%;
+    position: relative;
 }
 
-.bullet > .bulletPart, .bulletCheckbox > .bulletPart {
+.bullet .xButton {
+    position: absolute;
+    top: 50%;
+    right: 1vh;
+    width: 2vh;
+    aspect-ratio: 1/1;
+    background-color: transparent;
+    border-radius: 100vw;
+    opacity: 0;
+    transition: opacity 100ms ease, background 100ms ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.bullet .xButton > i {
+    font-size: 75%;
+    color: white;
+    transform: translate(0.2px, 0.5px);
+}
+
+.bullet:hover .xButton {
+    opacity: 1;
+}
+
+.bullet .xButton:hover {
+    background-color: var(--backgroundColor);
+}
+
+.bulletRegular > .bulletPart, .bulletCheckbox > .bulletPart {
     height: 100%;
     width: 10%;
     display: flex;
@@ -16,7 +48,7 @@
     font-size: 1.7rem;
 }
 
-.bullet > .textPart, .bulletCheckbox > .textPart {
+.bulletRegular > .textPart, .bulletCheckbox > .textPart {
     width: 90%;
     height: 100%;
     display: flex;
@@ -24,7 +56,7 @@
     align-items: center;
 }
 
-.bulletDate > .textPart, .bulletTime > .textPart {
+.bulletDate > .textPart {
     width: 85%;
     height: 100%;
     display: flex;
@@ -32,7 +64,15 @@
     align-items: center;
 }
 
-.bullet > .textPart > textarea, .bulletDate > .textPart > textarea, .bulletCheckbox > .textPart > textarea, .bulletTime > .textPart > textarea {
+.bulletTime > .textPart {
+    width: 73.333333333%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bullet > .textPart > textarea {
     width: 100%;
     font-size: 1rem;
     background-color: var(--lighterBackgroundColor);
@@ -43,8 +83,16 @@
     padding-left: 2%;
 }
 
-.bulletDate > .bulletPart, .bulletTime > .bulletPart {
+.bulletDate > .bulletPart {
     width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bulletTime > .bulletPart {
+    width: 25%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -61,7 +109,7 @@
     font-size: 1rem;
 }
 
-.bulletDate > .bulletPart > .bulletHolder > input, .bulletTime > .bulletPart > .bulletHolder > input {
+.bulletDate > .bulletPart > .bulletHolder > input {
     width: 40%;
     height: 90%;
     font-size: 1rem;
@@ -70,6 +118,29 @@
     border: 0;
     border-radius: 0.5vh;
     text-align: center;
+}
+
+.bulletTime > .bulletPart > .bulletHolder > input {
+    width: 26.6666666667%;
+    height: 90%;
+    font-size: 1rem;
+    color: rgb(230, 230, 230);
+    background-color: var(--middleBackgroundColor);
+    border: 0;
+    border-radius: 0.5vh;
+    text-align: center;
+}
+
+.bulletTime > .bulletPart > .bulletHolder > .AMPM {
+    width: 30%;
+    height: 90%;
+    font-size: 1rem;
+    color: rgb(230, 230, 230);
+    background-color: var(--middleBackgroundColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5vh;
 }
 
 /* CSS for checkboxes (not the whole div, just the checkbox itself) */
