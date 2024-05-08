@@ -1,12 +1,12 @@
 class Textarea extends Info {
-
-    /*
-        Makes a textarea and adds it to object.contentHolder
-        @param length {int} - Designated length for the textarea used if there are more than one
-        @param name {String} - Name of the textarea (if name = '/noName', the name div is set to display: none);
-        @param object {Submodule} - Submodule where the thing is added to
+    
+    /**
+     *   Makes a textarea and adds it to object.contentHolder
+     *   @param length {int} - Designated length for the textarea used if there are more than one
+     *   @param name {String} - Name of the textarea (if name = '/noName', the name div is set to display: none);
+     *   @param object {Submodule} - Submodule where the thing is added to
     */
-    constructor(length, i, parentModule, defaultValue = '') {
+    constructor(length, i, parentModule, defaultValue = {text: ''}) {
         super(i, parentModule);
         let name = parentModule.module.textInfo.names[i];
 
@@ -21,7 +21,9 @@ class Textarea extends Info {
         this.textarea = this.div.querySelector('textarea');
 
         //Sets the default value of the textarea
-        this.textarea.value = defaultValue;
+        this.textarea.value = defaultValue.text;
+
+        this.parentModule.module.info[this.i] = defaultValue;
 
         //Focuses the textarea
         this.div.focus();
@@ -38,6 +40,10 @@ class Textarea extends Info {
             return true;
         }
         return false;
+    }
+
+    getValueObj() {
+        return {text: this.textarea.value};
     }
 
     /*

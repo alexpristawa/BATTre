@@ -25,16 +25,15 @@ class Bullet extends Info {
         @param type {String} - Type of bullet (regular, date, etc.)
         @param parentModule {Submodule} - Submodule object that the div is appended to
     */
-    constructor(type = 'regular', parentModule, startingValue = 'none') {
+    constructor(type = 'regular', parentModule, startingValue = undefined) {
         super(parentModule.module.info.length, parentModule);
 
         this.type = type;
 
-        if(startingValue == 'none') {
+        if(startingValue == undefined && !['date'].includes(this.type)) {
+            console.log('here');
             startingValue = JSON.parse(JSON.stringify(Bullet.startingValues[this.type]));
         }
-
-        this.parentModule.module.info[this.i] = JSON.parse(JSON.stringify(startingValue));
  
         //Only focuses on the textarea if it doesn't have date selection
         let focused = false;
@@ -48,16 +47,25 @@ class Bullet extends Info {
 
             //Sets this.timeTextboxes to an array of time textboxes (in order)
             this.storeTimeTextboxes(startingValue);
+            if(startingValue == undefined) {
+                startingValue = {
+                    text: ''
+                }
+            }
 
-            focused = true;
+            //focused = true;
             this.div.querySelector('.bulletHolder').addEventListener('click', this.shiftBullet);
 
         } else if(this.type == 'time') {
             this.div.classList.add('bulletTime');
             this.div.innerHTML = document.getElementById('bulletTimeTemplate').innerHTML;
 
+            this.amOrPm = this.div.querySelector(".AMPM");
+
             //Sets this.timeTextboxes to an array of time textboxes (in order)
             this.storeTimeTextboxes(startingValue);
+
+            console.log(this.amOrPm);
 
             focused = true;
             this.div.querySelector('.bulletHolder').addEventListener('click', this.shiftBullet);
@@ -98,6 +106,9 @@ class Bullet extends Info {
             this.textarea.focus();
         }
         this.textarea.addEventListener('blur', this.generalBlurHandler);
+
+        //Sets the initial value for the info array
+        setTimeout(this.updateInfo(), 100);
     }
 
     /*
@@ -111,10 +122,9 @@ class Bullet extends Info {
         arr.forEach(input => {
             newArr.push(input);
         });
-        setTimeout(() => {newArr[0].focus();});
+        //setTimeout(() => {newArr[0].focus();});
         this.timeTextboxes = newArr;
 
-        console.log(startingValue);
         if(startingValue == undefined) {
 
             //Sets default values to current times if that is what you want
@@ -127,15 +137,26 @@ class Bullet extends Info {
                 this.timeTextboxes[1].value = `${date.getMinutes()}`;
             }
         } else {
+            console.log(startingValue);
             for(let i = 0; i < this.timeTextboxes.length; i++) {
-                this.timeTextboxes[i].value = startingValue[`time${i}`];
+                this.timeTextboxes[i].value = startingValue[`time${i}`].padStart(2, '0');
             }
+            if(startingValue.amOrPm !== undefined) {
+                this.amOrPm.innerHTML = startingValue.amOrPm;
+            }
+        }
+        
+        if(this.type == 'time') {
+            this.amOrPm.addEventListener('mousedown', () => {
+                this.amOrPm.innerHTML == "AM" ? this.amOrPm.innerHTML = "PM" : this.amOrPm.innerHTML = "AM";
+                this.updateInfo();
+            });
         }
         
         /*
             Function logic for when you click on a time textbox, and click off of it
         */
-        this.timeTextboxes.forEach(textbox => textbox.addEventListener('mousedown', () => {
+        this.timeTextboxes.forEach(textbox => textbox.addEventListener('focus', () => {
 
             //Initially clears the textbox
             let value = textbox.value;
@@ -143,6 +164,7 @@ class Bullet extends Info {
 
             let keydownHandler = (event) => {
                 if(event.key !== 'Enter') {
+                    textbox.removeEventListener('blur', blurHandler);
                     document.removeEventListener('mousedown', clickHandler);
                     textbox.removeEventListener('keydown', keydownHandler);
                 } else {
@@ -152,10 +174,18 @@ class Bullet extends Info {
 
             let clickHandler = () => {
                 textbox.value = value;
+                textbox.removeEventListener('blur', blurHandler);
                 document.removeEventListener('mousedown', clickHandler);
                 textbox.removeEventListener('keydown', keydownHandler);
             }
 
+            let blurHandler = () => {
+                clickHandler();
+            }
+
+            //Does it before the timeout because a blur can happen internally
+            textbox.addEventListener('blur', blurHandler);
+            
             setTimeout(() => {
                 textbox.addEventListener('keydown', keydownHandler);
                 document.addEventListener('mousedown', clickHandler);
@@ -228,8 +258,10 @@ class Bullet extends Info {
     getValueObj() {
         if(['regular'].includes(this.type)) {
             return {text: this.textarea.value};
-        } else if(['date', 'time'].includes(this.type)) {
+        } else if(['date'].includes(this.type)) {
             return {text: this.textarea.value, time0: this.timeTextboxes[0].value, time1: this.timeTextboxes[1].value};
+        } else if(['time'].includes(this.type)) {
+            return {text: this.textarea.value, time0: this.timeTextboxes[0].value, time1: this.timeTextboxes[1].value, amOrPm: this.amOrPm.innerHTML};
         } else if(['checkbox'].includes(this.type)) {
             return {text: this.textarea.value, checked: this.checkbox.checked};
         }

@@ -3,9 +3,9 @@ class Favicon {
     //Favicon element (to change the href)
     static element = document.querySelector('link[rel="icon"]');
     
-    /*
-        Function that changes battery percentage when the page is loaded
-    */
+    /**
+     * Function that changes battery percentage when the page is loaded
+     */
     static loadupFunction() {
         let direction = 1;
         let i = 0;

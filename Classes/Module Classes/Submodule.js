@@ -1,6 +1,6 @@
 class Submodule extends Module  {
 
-    constructor(obj, i) {
+    constructor(obj, i, animate = true) {
 
         //Has no function but to prevent syntax errors
         super("STUPID", 0);
@@ -12,10 +12,16 @@ class Submodule extends Module  {
         moduleHolder.appendChild(div);
 
         let text = div.querySelector('h2');
-        text.innerHTML = obj.module.submodules[i].title;
 
-        this.parent = obj;
-        this.module = obj.module.submodules[i];
+        if(i != undefined) {
+            this.parent = obj;
+            this.module = obj.module.submodules[i];
+            text.innerHTML = obj.module.submodules[i].title;
+        } else {
+            this.parent = undefined;
+            this.module = obj;
+            text.innerHTML = obj.title;
+        }
         this.contentHolder = div.querySelector('.contentHolder');
 
         //If the submodules have more submodules
@@ -49,7 +55,17 @@ class Submodule extends Module  {
 
         //Index in parent module
         this.i = i;
-        this.moveFromModule();
+
+        //Not called if it is a module
+        if(i != undefined) {
+            if(animate) {
+                this.moveFromModule();
+            } else {
+                this.fillContent();
+            }
+        } else {
+            this.fillContent();
+        }
 
         //Event listeners for when you click or hit enter
         div.addEventListener('click', this.clickListener);
@@ -99,39 +115,19 @@ class Submodule extends Module  {
     */
     moveFromModule() {
 
-        //String values (NOT ELEMENTS) used to locate the div you want to move
-        let ref = this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1})`).dataset.target;
-        let textRef = this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1}) > h3`).dataset.target;
-
         //Uses ref and textRef to get the divs you want to move
-        let divToMove = document.querySelector(`[data-ref='${ref}']`);
-        let textToMove = document.querySelector(`[data-ref='${textRef}']`);
+        let divToMove = this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1})`).cloneForAnimation();
+        let textToMove = this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1}) > h3`).cloneForAnimation();
 
-        //CSS for animating the divs to move to where they currently are
-        //CSS changes for the div
-        divToMove.style.transition = 'all 1000ms ease-in-out';
-        divToMove.style.top = `${this.element.getY()}px`;
-        divToMove.style.left = `${this.element.getX()}px`;
-        divToMove.style.width = `${this.element.offsetWidth - 4}px`;
-        divToMove.style.height = `${this.element.offsetHeight - 4}px`;
-        divToMove.style.backgroundColor = 'var(--backgroundColor)';
-        divToMove.style.border = '2px solid var(--borderColor)';
-
-        //CSS changes for the text
-        textToMove.style.transition = 'all 1000ms ease-in-out';
-        textToMove.style.top = `${this.element.querySelector('h2').getY() - 1.5 * rem}px`;
-        textToMove.style.left = `${this.element.querySelector('h2').getX()}px`;
-        textToMove.style.width = `${this.element.querySelector('h2').offsetWidth + 1}px`;
-        textToMove.style.height = `${this.element.querySelector('h2').offsetHeight}px`;
-        textToMove.style.fontSize = '1.5rem';
-
-        //Gets rid of unneeded divs and resets the datasets on elements
-        setTimeout(() => {
-            divToMove.remove();
-            textToMove.remove();
-            delete this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1})`).dataset.target;
-            delete this.parent.element.querySelector(`.contentHolder > div:nth-child(${this.i+1}) > h3`).dataset.target;
-        }, 1000)
+        divToMove.goTo(this.element, {
+            backgroundColor: 'var(--backgroundColor)',
+            border: '2px solid var(--borderColor)',
+            zIndex: 3
+        });
+        textToMove.goTo(this.element.querySelector('h2'), {
+            fontSize: '1.5rem',
+            zIndex: 4
+        });
     }
 
     /*
@@ -171,8 +167,11 @@ class Submodule extends Module  {
         } else if(this.module.textType == 'textarea') {
 
             let length = this.module.textInfo.names.length;
+            let info = JSON.parse(JSON.stringify(this.module.info));
+            this.module.info = [];
+
             for(let i = 0; i < length; i++) {
-                new Textarea(length, i, this, this.module.info[i]);
+                new Textarea(length, i, this, info[i]);
             }
         }
     }

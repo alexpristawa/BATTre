@@ -1,40 +1,10 @@
 class Module {
 
     static modules = [];
+    static activeModule;
 
     constructor(obj, i) {
 
-        //obj is set to 'STUPID' if it is called from the Submodule subclass
-        if(obj !== 'STUPID') {
-            let divs = document.querySelectorAll('#moduleHolder > .moduleShow');
-            let div = divs[i];
-            this.element = div;
-
-            //Object holding information
-            this.module = obj;
-
-            //Index of the module in the parent's module.submodules array
-            this.i = i;
-
-            //Blank array that gets filled when the submodules are initialized
-            this.submodules = [];
-
-            //Titles the module and submodule boxes
-            let text = divs[i].querySelector('.textHolder > h2');
-            text.innerHTML = obj.title;
-            let innerDivs = document.querySelectorAll(`#moduleHolder > .moduleShow:nth-child(${i+1}) > .contentHolder > div`);
-            for(let j = 0; j < obj.submodules.length; j++) {
-                innerDivs[j].querySelector('h3').innerHTML = obj.submodules[j].title;
-            }
-
-            //Enlarges module when clicked (Has to be an arrow function)
-            div.addEventListener('click', () => {
-                this.enlargeModule();
-            });
-
-            //Adds to static variable
-            Module.modules.push(this);
-        }
     }
 
     /*
@@ -43,29 +13,29 @@ class Module {
     static fillModules() {
 
         for(let i = 0; i < modulesInfo.length; i++) {
-            new Module(modulesInfo[i], i);
+            Module.modules.push(new Submodule(modulesInfo[i], undefined));
+            Module.modules[i].i = i;
         }
     }
 
-    /*
-        Basically just calls fillModules() function
-    */
+    /**
+     * Basically just calles this.fillModules()
+     */
     enlargeModule() {
         moduleHolder.style.display = 'grid';
         rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
         this.fillModules();
     }
 
-    /*
-        Makes the submodules for the parent module
-        Makes a cloneNode of each child and makes them positioned absolutely
-    */
+    /**
+     * Makes the submodules for the parent module
+     * Makes a cloneNode of each child and makes them positioned absolutely
+     * @param {boolean} exiting - The function either zooms in or out
+     * @returns 
+     */
     fillModules() {
         let OGParent = this.element;
         let children = OGParent.querySelectorAll('*');
-
-        //Used to locate the absolute element later
-        let referenceNumber = 0;
 
         //Makes a deep copy of the grid to keep it there for a second
         {
@@ -85,56 +55,40 @@ class Module {
         [...children, OGParent].forEach(child => {
             if((!child.classList.contains('textHolder')) && (!child.classList.contains('contentHolder')) && child.tagName != "H2") {
 
-                //Copies the div and places it perfectly on top of the old div
-                let newDiv = child.cloneNode(false);
-                let heightFixer = 0;
-                if(['H3'].indexOf(child.tagName) != -1) {
-                    newDiv.style.zIndex = '5';
-                    newDiv.innerHTML = child.innerHTML;
-                    heightFixer = rem;
-                    newDiv.classList.add('h3ToMove');
-                } else if(!child.classList.contains('moduleShow') && !child.classList.contains('submodule')) {
-                    newDiv.style.zIndex = '4';
-                    newDiv.classList.add('divToMove');
-                } else {
-                    newDiv.style.zIndex = '2';
+                child.dataset.left = child.getX();
+                child.dataset.top = child.getY();
+                child.dataset.width = child.offsetWidth;
+                child.dataset.height = child.offsetHeight;
+
+
+                if(['H2', 'H3'].includes(child.tagName)) {
+                    let style = window.getComputedStyle(child);
+                    child.dataset.fontSize = style.fontSize;
                 }
-                newDiv.style.position = 'absolute';
-                newDiv.style.left = `${child.getX()}px`;
-                newDiv.style.top = `${child.getY() - heightFixer}px`;
-                newDiv.style.width = `${child.offsetWidth}px`;
-                newDiv.style.height = `${child.offsetHeight}px`;
-
-
-                //Used later referencing `newDiv`
-                child.dataset.target = referenceNumber;
-
-                //Used later to locate the div from `child`
-                newDiv.dataset.ref = referenceNumber;
-
-                referenceNumber++;
-                body.appendChild(newDiv);
             }
         });
 
         moduleHolder.innerHTML = '';
 
-        //After duplicating the elements, it then creates the submodules
+        Module.activeModule = this;
+        //After assigning dataset values to the elements, it then creates the submodules
         for(let i = 0; i < this.module.submodules.length; i++) {
             this.submodules.push(new Submodule(this, i));
         }
 
         //Moves the original box to take up the whole box
-        let ref = OGParent.dataset.target;
-        let divToMove = document.querySelector(`[data-ref='${ref}']`);
+        let divToMove = OGParent.cloneForAnimation();
+        let referenceElement = moduleHolder;
+
         divToMove.style.transition = 'all 1000ms ease-in-out';
-        divToMove.style.top = `${moduleHolder.getY()}px`;
-        divToMove.style.left = `${moduleHolder.getX()}px`;
-        divToMove.style.width = `${moduleHolder.offsetWidth}px`;
-        divToMove.style.height = `${moduleHolder.offsetHeight}px`;
+        divToMove.style.top = `${referenceElement.getY()}px`;
+        divToMove.style.left = `${referenceElement.getX()}px`;
+        divToMove.style.width = `${referenceElement.offsetWidth}px`;
+        divToMove.style.height = `${referenceElement.offsetHeight}px`;
         divToMove.style.backgroundColor = 'var(--darkerBackgroundColor)';
         divToMove.style.border = '4px solid var(--borderColor)';
         divToMove.style.borderRadius = '2vh';
+        divToMove.style.zIndex = 2;
         setTimeout(() => {
             moduleHolder.style.visibility = 'visible';
             divToMove.remove();
@@ -142,6 +96,68 @@ class Module {
         }, 1000);
     }
 
+    /**
+     * 
+     */
+    exitModule() {
+        let children = moduleHolder.querySelectorAll('*');
+        [...children, moduleHolder].forEach(child => {
+            child.dataset.left = child.getX();
+            child.dataset.top = child.getY();
+            child.dataset.width = child.offsetWidth;
+            child.dataset.height = child.offsetHeight;
+
+            if(['H2', 'H3'].includes(child.tagName)) {
+                let style = window.getComputedStyle(child);
+                child.dataset.fontSize = style.fontSize;
+            }
+        });
+
+        Module.activeModule = this.parent;
+        moduleHolder.innerHTML = '';
+        //After assigning dataset values to the elements, it then creates the submodules
+        if(this.parent == undefined) {
+            Module.modules = [];
+            Module.fillModules();
+        } else {
+            this.parent.submodules = [];
+            for(let i = 0; i < this.parent.module.submodules.length; i++) {
+                this.parent.submodules.push(new Submodule(this.parent, i, false));
+            }
+        }
+
+        let module = moduleHolder.querySelectorAll('.submodule')[this.i];
+        let HTMLElements = module.querySelectorAll("*");
+        let i = -1;
+        [module, ...HTMLElements].forEach(child => {
+            if((!child.classList.contains('textHolder')) && (!child.classList.contains('contentHolder')) && child.tagName != "H2") {
+                let divToMove;
+                if(child.classList.contains('submodule')) {
+                    divToMove = moduleHolder.cloneForAnimation();
+                    divToMove.style.zIndex = 2;
+                    divToMove.goTo(child, {
+                        backgroundColor: 'var(--backgroundColor)',
+                        borderRadius: '1vh'
+                    });
+                } else if(child.classList.contains('submoduleDisplayInModule')) {
+                    i++;
+                    divToMove = this.submodules[i].element.cloneForAnimation();
+                    divToMove.style.zIndex = 3;
+                    divToMove.goTo(child, {
+                        backgroundColor: 'var(--darkerBackgroundColor)',
+                        borderRadius: '1vh',
+                        border: '0px'
+                    });
+                } else if(child.tagName == 'H3') {
+                    divToMove = this.submodules[i].element.querySelector('h2').cloneForAnimation();
+                    divToMove.style.zIndex = 4;
+                    divToMove.goTo(child, {
+                        fontSize: '1rem'
+                    });
+                }
+            }
+        });
+    }
 
     /*
         Fills the content of submodules

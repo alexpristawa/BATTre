@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.logoHolder > .mainPart {
+.logoHolder > .body {
     position: relative;
     height: 100%;
     width: 78%;
@@ -31,7 +31,7 @@
     z-index: 0;
 }
 
-.logoHolder > .mainPart > .batteryPercentage {
+.logoHolder > .body > .batteryPercentage {
     position: absolute;
     top: -200%;
     right: 100%;
@@ -41,7 +41,7 @@
     transform: rotate(-5deg);
 }
 
-.logoHolder > .mainPart > h2 {
+.logoHolder > .body > h2 {
     font-size: 510%;
     color: white;
     font-family: 'Train One', system-ui;
@@ -49,6 +49,15 @@
     margin: 0;
     line-height: 1;
     transform: translate(-1.2%, -4%);
+}
+
+.logoHolder > .body > h2 > span {
+    font-size: inherit;
+    color: inherit;
+    font-family: inherit;
+    text-shadow: inherit;
+    margin: 0;
+    line-height: 1;
 }
 
 .logoHolder > .cap {
@@ -70,4 +79,54 @@
     margin: 0;
     line-height: 1;
     transform: translate(-1.2%, -4%);
+}
+
+.logoHolder > .cap > h3 > span {
+    font-size: inherit;
+    color: inherit;
+    font-family: inherit;
+    text-shadow: inherit;
+    margin: 0;
+    line-height: 1;
+}
+
+.animationWordHolder {
+    position: absolute;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.animationWords {
+    font-family: "Bree Serif", serif;
+    color: white;
+    width: min-content;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.animationWords > p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    font-family: "Bree Serif", serif;
+    color: white;
+    font-size: inherit;
+}
+
+.animationDrop {
+    position: absolute;
+    width: min-content;
+    height: min-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.animationDrop > span {
+    color: white;
+    font-family: "Bree Serif", serif;
+    width: min-content;
+    line-height: 1.05;
 }

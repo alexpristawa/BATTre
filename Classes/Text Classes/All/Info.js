@@ -1,5 +1,11 @@
+//Superclass for all information types like bullets or textareas
 class Info {
 
+    /**
+     * Constructor for the Info class. General constructor
+     * @param {int} i - Index in the parent's array of information
+     * @param {Module} parentModule - Parent's Module object 
+     */
     constructor(i, parentModule) {
 
         //Parent module
@@ -15,22 +21,35 @@ class Info {
         this.div.addEventListener('keydown', this.generalKeydownHandler);
     }
 
-    /*
-        Keydown handler for all information types
-    */
+    /**
+     * Keydown handler for all information types
+     * @param {Event} event - Mouse event object
+     */
     generalKeydownHandler = (event) => {
         this.keydownHandler(event);
+        this.updateInfo(event);
+    }
+
+    /**
+     * Updates the parent's info object (Called from a keydown handler)
+     * Does not update storage until element is blurred
+     * @param {Event} event - Mouse event object
+     */
+    updateInfo(event) {
         setTimeout(() => {
-            if(event.target.tagName == 'TEXTAREA') {
+            if(event == undefined || ['TEXTAREA', 'INPUT'].includes(event.target.tagName)) {
+                console.log(this.getValueObj());
+                console.log(this);
+                console.log('\n');
                 this.parentModule.module.info[this.i] = this.getValueObj();
             }
-            console.log(this.getValueObj());
         });
     }
 
-    /*
-        Blur handler for all information types
-    */
+    /**
+     * Blur handler for any information type
+     * @param {Event} event - Mouse event object
+     */
     generalBlurHandler = (event) => {
         if(this.isEmpty() && this.parentModule.module.textType.substring(0, 6) == 'bullet' && this.parentModule.module.info.length > 1) {
             this.delete();
@@ -38,9 +57,9 @@ class Info {
         StorageManager.updateStorage();
     }
 
-    /*
-        Function that deletes the information type
-    */
+    /**
+     * Deletes the information type and removes it from the parent's info array
+     */
     delete = () => {
         this.div.remove();
         this.parentModule.module.info.splice(this.i, 1);

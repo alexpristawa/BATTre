@@ -7,6 +7,41 @@ let vh = window.innerHeight/100;
 let vw = window.innerWidth/100;
 let rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
+const defaultRefreshFrequencies = {
+    day: {
+        type: "d",
+        resetTime: {
+            h: 0,
+            m: 0,
+        }
+    },
+    week: {
+        type: 'w',
+        resetTime: {
+            d: 0,
+            h: 0,
+            m: 0
+        }
+    },
+    month: {
+        type: 'm',
+        resetTime: {
+            d: 0,
+            h: 0,
+            m: 0
+        }
+    },
+    year: {
+        type: 'y',
+        resetTime: {
+            m: 0,
+            d: 0,
+            h: 0,
+            m: 0
+        }
+    }
+}
+
 //Gives all modules their default values
 document.querySelectorAll('#moduleHolder > div').forEach(el => el.innerHTML = moduleDefaultText);
 
@@ -41,16 +76,19 @@ let modulesInfo = [
             {
                 title: 'What To Improve On',
                 textType: 'bullet-regular',
+                refreshFrequency: 'month',
                 info: []
             },
             {
                 title: 'What I Am Proud Of',
                 textType: 'bullet-regular',
+                refreshFrequency: 'day',
                 info: []
             },
             {
                 title: "How Far I've Come",
                 textType: 'textarea',
+                refreshFrequency: 'week',
                 textInfo: {
                     names: ['Day', 'Week', 'Month', 'Year']
                 },
@@ -59,6 +97,7 @@ let modulesInfo = [
             {
                 title: 'Discoveries',
                 textType: 'bullet-regular',
+                refreshFrequency: 'never',
                 info: []
             }
         ]
@@ -69,11 +108,13 @@ let modulesInfo = [
             {
                 title: 'Intentions',
                 textType: 'bullet-regular',
+                refreshFrequency: 'day',
                 info: []
             },
             {
                 title: "What I'm Looking Forward To",
                 textType: 'textarea',
+                refreshFrequency: 'week',
                 textInfo: {
                     names: ['Day', 'Week', 'Month', 'Year']
                 },
@@ -85,7 +126,8 @@ let modulesInfo = [
                 info: []
             },
             {
-                title: 'Vision Board'
+                title: 'Vision Board',
+                refreshFrequency: 'never'
             }
         ]
     },
@@ -98,11 +140,13 @@ let modulesInfo = [
                     {
                         title: "Today's Schedule",
                         textType: 'bullet-time',
+                        refreshFrequency: 'special-todaysSchedule',
                         info: []
                     },
                     {
                         title: "Tomorrow's Schedule",
                         textType: 'bullet-time',
+                        refreshFrequency: "daily",
                         info: []
                     },
                     {
@@ -127,6 +171,7 @@ let modulesInfo = [
                 textInfo: {
                     names: ['/noName']
                 },
+                refreshFrequency: 'never',
                 info: []
             }
         ]
@@ -137,21 +182,25 @@ let modulesInfo = [
             {
                 title: 'Positive Failures',
                 textType: 'bullet-date',
+                refreshFrequency: 'year',
                 info: []
             },
             {
                 title: 'Compliments',
                 textType: 'bullet-date',
+                refreshFrequency: 'year',
                 info: []
             },
             {
                 title: 'Key Takeaways',
                 textType: 'bullet-date',
+                refreshFrequency: 'never',
                 info: []
             },
             {
                 title: 'Thought Dumps',
                 textType: 'bullet-date',
+                refreshFrequency: 'year',
                 info: []
             }
         ]
@@ -174,19 +223,11 @@ let createLogo = () => {
     });
 }
 
-let initializeModulesInfo = () => {
-    if(localStorage.BATTre != undefined) {
-        let obj = JSON.parse(localStorage.BATTre);
-        modulesInfo = obj.modulesInfo;
-    }
-    StorageManager.updateStorage();
-}
-
 //onload function to fill modules and stuff
 window.onload = () => {
-    Settings.initializeDimensions();
+    Settings.initialize();
     Favicon.loadupFunction();
-    initializeModulesInfo();
+    StorageManager.initializeModulesInfo();
     changeColorScheme(backgroundColors[0]);
     createLogo();
     Module.fillModules();
